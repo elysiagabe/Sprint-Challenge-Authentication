@@ -1,15 +1,19 @@
-import React, { useState } from 'React';
+import React, { useState, useContext } from 'React';
+import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { JokeContext } from '../contexts/JokeContext';
 
 const LoginForm = (props) => {
+    const { setLoggedIn } = useContext(JokeContext);
+    
     const [creds, setCreds] = useState({
         username: '',
         password: ''
     })
 
     const handleInputChange = e => {
-        setCredentials({
-            ...credentials,
+        setCreds({
+            ...creds,
             [e.target.name]: e.target.value  
         })
     }
@@ -21,7 +25,7 @@ const LoginForm = (props) => {
             .then(res => {
                 console.log(res);
                 localStorage.setItem('token', res.data.payload);
-                // props.history.push('/jokes');
+                props.history.push('/jokes');
                 setLoggedIn(true);
             })
             .catch(err => console.log('There was an error logging in: ', err))
@@ -51,6 +55,7 @@ const LoginForm = (props) => {
 
                 <button type="submit">Log In</button>
             </form>
+            <Link to="/register">Don't have an account yet? Register now.</Link>
         </div>
     )
 }
