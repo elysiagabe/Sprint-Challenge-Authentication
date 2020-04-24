@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
         const token = generateToken(user[0]);
         res.json({ message: 'Welcome!', token })
       } else {
-        res.status(401).json({ message: 'You shall not pass!' })
+        res.status(404).json({ message: 'You shall not pass!' })
       }
     })
     .catch(err => {
